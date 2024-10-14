@@ -18,9 +18,18 @@ use App\Model\Subcategory;
 */
 
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('home',["title"=>"January's Report"]);
 });
+
 Route::get('/create-transaction', function () {
     return view('create-transaction',['title'=>'Create Transaction']);
+});
+
+Route::get('/', function () {
+    return view('login');
+});
+
+Route::get('/register', function () {
+    return view('register');
 });
