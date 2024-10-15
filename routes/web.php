@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Model\Transaction;
 use App\Model\Category;
 use App\Model\Subcategory;
-
+use App\Models\User;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,5 @@ Route::get('/', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
+Route::post('/register', [UserController::class, 'store']);

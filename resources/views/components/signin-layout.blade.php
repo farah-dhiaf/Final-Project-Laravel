@@ -8,14 +8,9 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Home</title>
 </head>
-<body>
-<div class="min-h-full">
-  <main>
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      {{$slot}}
-    </div>
-  </main>
-</div>
-
+<body class="bg-blue-50">
+  <div class="mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    {{$slot}}
+  </div>
 </body>
 </html>
