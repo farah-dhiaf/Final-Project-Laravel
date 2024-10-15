@@ -18,18 +18,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-
-Route::get('/home', function () {
-    return view('home',["title"=>"January's Report"]);
-});
-
-Route::get('/create-transaction', function () {
-    return view('create-transaction',['title'=>'Create Transaction']);
-});
-
 Route::get('/', function () {
     return view('login');
-});
+})->middleware('guest');
 
 Route::post('/', [UserController::class, 'authenticate']);
 
@@ -38,3 +29,13 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [UserController::class, 'store']);
+
+Route::get('/home', function () {
+    return view('home',["title"=>"January's Report"]);
+})->middleware('auth');
+
+Route::get('/create-transaction', function () {
+    return view('create-transaction',['title'=>'Create Transaction']);
+});
+
+Route::post('/logout', [UserController::class, 'logout']);
