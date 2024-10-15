@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserController extends Controller
@@ -25,5 +26,24 @@ class UserController extends Controller
         ]);
 
         return redirect('/')->with('success', 'User registered successfully!');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if(Auth::attempt([
+            'email' => $request['email'],
+            'password' => $request['password'],  // Hash password
+        ]))
+        {
+            $request->session()->regenerate();
+            return redirect()->intended('/home');
+        }
+
+        return back()->with('loginError', 'Login Failed');
     }
 }

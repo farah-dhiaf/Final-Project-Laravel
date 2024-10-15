@@ -31,6 +31,8 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::post('/', [UserController::class, 'authenticate']);
+
 Route::get('/register', function () {
     return view('register');
 });
