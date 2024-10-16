@@ -10,17 +10,20 @@
               <details class="relative">
               <summary class="cursor-pointer flex items-center">
                   <div type="button" class="inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 
-                            focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 
-                            focus:outline-none dark:focus:ring-primary-800">
+                      focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 
+                      focus:outline-none dark:focus:ring-primary-800">
+                      <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+                      </svg>
                       Set Period
                   </div>
               </summary>
 
               <!-- Dropdown menu -->
-              <div class="absolute right-0 mt-2 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+              <form action="/home/{{Auth::user()->username}}" method="GET" class="absolute right-0 mt-2 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                   <div class="py-3 px-4">
                       <label for="selectMonth" class="block text-sm font-medium text-gray-900 dark:text-white">Month</label>
-                      <select id="selectMonth" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                      <select id="selectMonth" name="month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
                           <option value="1">January</option>
                           <option value="2">February</option>
                           <option value="3">March</option>
@@ -38,51 +41,91 @@
 
                   <div class="py-3 px-4">
                       <label for="inputYear" class="block text-sm font-medium text-gray-900 dark:text-white">Year</label>
-                      <input type="number" id="inputYear" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md" value="{{ date('Y') }}">
+                      <input type="number" name="year" id="inputYear" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md" value="{{ date('Y') }}">
                   </div>
 
-                  <button class="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-3 py-2" id="applyPeriodButton">Set</button>
-              </div>
+                  <button class="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-3 py-2" id="applyPeriodButton">
+                      Set
+                  </button>
+              </form>
           </details>
 
-
-
-              <a href="/create-transaction">
-                <button type="button" class="hidden sm:inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 
+                <!-- new transaction -->
+                <details class="relative">
+                    <summary class="cursor-pointer flex items-center">
+                        <div type="button" class="hidden sm:inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 
                 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 
                 focus:outline-none dark:focus:ring-primary-800">
-                  <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                  </svg>
-                  New Transaction
-                </button>
-              </a>
+                            <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            New Transaction
+                        </div>
+                    </summary>
 
-              <!-- Dropdown menggunakan <details> dan <summary> -->
-              <details class="relative">
-                <summary class="cursor-pointer flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user">
-                </summary>
-                <!-- Dropdown menu -->
-                <div class="absolute right-0 mt-2 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                    <div class="py-3 px-4">
-                        <span class="block text-sm font-semibold text-gray-900 dark:text-white">{{ Auth::user()->username }}</span>
+                    <!-- Dropdown menu -->
+                    <div
+                        class="absolute right-0 mt-2 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <!-- <div class="py-3 px-4">
+                            <a href="/create-transaction">
+                                <button type="button"
+                                    class="inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800">Income</button>
+                            </a>
+                            <span
+                                class="block text-sm font-semibold text-gray-900 dark:text-white">{{ Auth::user()->username }}</span>
+                        </div> -->
+                        <ul class="block text-sm font-semibold text-gray-900 dark:text-white">
+                            <li>
+                                <!-- <a href="/income/{{ Auth::user()->username }}/create" -->
+                                <a href="/income/create"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Add Income</a>
+                            </li>
+                            <li>
+                            <!-- <a href="/outcome/{{ Auth::user()->username }}/create" -->
+                            <a href="/outcome/create"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Add Outcome</a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="py-1 text-gray-500 dark:text-gray-400">
-                        <li>
-                            <a href="/profile/{{ Auth::user()->username }}" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My profile</a>
-                        </li>
-                        <li>
-                            <form action="/logout" method="post" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                @csrf
-                                <button type="submit">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-              </details>
-          </div>
-      </div>
-  </nav>
+                </details>
+
+                <!-- Dropdown menggunakan <details> dan <summary> -->
+                <details class="relative">
+                    <summary
+                        class="cursor-pointer flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="h-8 w-8 rounded-full"
+                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user">
+                    </summary>
+                    <!-- Dropdown menu -->
+                    <div
+                        class="absolute right-0 mt-2 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <div class="py-3 px-4">
+                            <span
+                                class="block text-sm font-semibold text-gray-900 dark:text-white">{{ Auth::user()->username }}</span>
+                        </div>
+                        <ul class="py-1 text-gray-500 dark:text-gray-400">
+                            <li>
+                                <a href="/profile/{{ Auth::user()->username }}"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My
+                                    profile</a>
+                            </li>
+                            <li>
+                                <form action="/logout" method="post"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    @csrf
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </nav>
 </header>

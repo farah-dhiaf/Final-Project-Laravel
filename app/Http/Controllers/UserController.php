@@ -43,6 +43,8 @@ class UserController extends Controller
         {
             $request->session()->regenerate();
             $user = Auth::user();
+            $month = now()->month;
+            $year = now()->year;
             return redirect()->intended("/home/{$user->username}");
         }
 
