@@ -20,22 +20,24 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('login');
-})->middleware('guest');
-
+});//->middleware('guest');
 Route::post('/', [UserController::class, 'authenticate']);
 
 Route::get('/register', function () {
     return view('register');
 });
-
 Route::post('/register', [UserController::class, 'store']);
 
-Route::get('/home', function () {
-    return view('home',["title"=>"January's Report"]);
-})->middleware('auth');
+Route::get('/home/{user:username}', function (User $user) {
+    return view('home',["title"=>"January's Report", "user" => $user]);
+});//->middleware('auth');
 
 Route::get('/create-transaction', function () {
     return view('create-transaction',['title'=>'Create Transaction']);
 });
 
 Route::post('/logout', [UserController::class, 'logout']);
+
+Route::get('/profile/{user:username}', function (User $user) {
+    return view('profile',["user" => $user]);
+});//->middleware('auth');

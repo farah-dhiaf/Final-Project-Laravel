@@ -41,7 +41,8 @@ class UserController extends Controller
         ]))
         {
             $request->session()->regenerate();
-            return redirect()->intended('/home');
+            $user = Auth::user();
+            return redirect()->intended("/home/{$user->username}");
         }
 
         return back()->with('loginError', 'Login Failed');
