@@ -9,14 +9,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $with = ['category', 'subcategory'];
-    protected $fillable = ['title', 'user_id', 'category_id', 'subcategory_id', 'amount', 'description'];
+    protected $with = ['category'];
+    protected $fillable = ['title', 'category_id', 'amount', 'description'];
+    // protected $fillable = ['title', 'amount', 'description'];
+    // protected $guarded = ['id','user_id', 'created_at', 'updated_at'];
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $casts = [
+        'id' => 'integer',
+        // 'user_id' => 'integer',
+        'title' => 'string',
+        // 'category_id' => 'integer',
+        'amount' => 'decimal:2',
+        'description' => 'string',
+
+    ];
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
     public function category()
     {
         return $this->belongsTo(Category::class);
