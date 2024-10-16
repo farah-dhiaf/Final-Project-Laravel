@@ -12,8 +12,4 @@ class Category extends Model
     {
         return $this->hasMany(Transaction::class, 'category_id');
     }
-    public function subcategories()
-    {
-        return $this->hasMany(Subcategory::class, 'category_id');
-    }
 }

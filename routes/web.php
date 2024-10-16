@@ -22,12 +22,12 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('login');
 });//->middleware('guest');
-Route::post('/', [User::class, 'authenticate']);
+Route::post('/', [UserController::class, 'authenticate']);
 
 Route::get('/register', function () {
     return view('register');
 });
-Route::post('/register', [User::class, 'store']);
+Route::post('/register', [UserController::class, 'store']);
 
 Route::get('/home/{user:username}', function (User $user) {
     return view('home',["title"=>"January's Report", "user" => $user]);
@@ -37,7 +37,7 @@ Route::get('/create-transaction', function () {
     return view('create-transaction',['title'=>'Create Transaction']);
 });
 
-Route::post('/logout', [User::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout']);
 
 Route::get('/profile/{user:username}', function (User $user) {
     return view('profile',["user" => $user]);
@@ -48,8 +48,8 @@ Route::get('/profile/{user:username}/update', function (User $user) {
 Route::get('/profile/{user:username}/delete', function (User $user) {
     return view('delete-profile',["user" => $user]);
 });
-Route::put('/profile', [User::class, 'updateProfile']);
-Route::delete('/profile', [User::class, 'deleteProfile']);
+Route::put('/profile', [UserController::class, 'updateProfile']);
+Route::delete('/profile', [UserController::class, 'deleteProfile']);
 
 Route::get('/income/{user:username}', function (User $user, Transaction $transaction) {
     return view('income',["user" => $user, 'transactions' => $transaction]);

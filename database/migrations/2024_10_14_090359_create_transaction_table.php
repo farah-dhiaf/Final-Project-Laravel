@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->foreignId('user_id')->constrained('users', indexName: 'transaction_user_id');
+            $table->string('type');
             $table->foreignId('category_id')->constrained('categories', indexName: 'transaction_category_id');
-            $table->foreignId('subcategory_id')->constrained('subcategories', indexName: 'transaction_subcategory_id');
             $table->float('amount');
             $table->text('description');     
             $table->timestamps();
