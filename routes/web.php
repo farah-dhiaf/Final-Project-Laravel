@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Model\Transaction;
+use App\Models\Transaction;
 use App\Model\Category;
 use App\Model\Subcategory;
 use App\Models\User;
@@ -50,3 +50,11 @@ Route::get('/profile/{user:username}/delete', function (User $user) {
 });
 Route::put('/profile', [User::class, 'updateProfile']);
 Route::delete('/profile', [User::class, 'deleteProfile']);
+
+Route::get('/income/{user:username}', function (User $user, Transaction $transaction) {
+    return view('income',["user" => $user, 'transactions' => $transaction]);
+});
+
+Route::get('/outcome/{user:username}', function (User $user, Transaction $transaction) {
+    return view('outcome',["user" => $user, 'transactions' => $transaction]);
+});
