@@ -4,7 +4,7 @@
           <div class="flex justify-start items-center">
               <!-- Logo dan nama perlu diganti -->
               <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="FlowBite Logo" />
-              <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+              <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MyMoney</span>
           </div>
           <div class="flex items-center lg:order-2">
               <details class="relative">

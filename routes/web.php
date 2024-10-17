@@ -3,6 +3,7 @@
 // use App\Models\Category;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 use App\Models\Transaction;
 use App\Model\Category;
 use App\Model\Subcategory;
@@ -99,8 +100,12 @@ Route::get('/income/{user:username}', function (User $user) {
         'user' => $user,
         'year' => $year,
         'month' => $month,
-        'transactions' => Transaction::filter(request(['category', 'year', 'month']))
-    ]);
+        'transactions' => Transaction::with('category') // Eager loading 'category'
+                            ->where('category_id', 1)
+                            ->whereYear('created_at', $year) // Filter berdasarkan tahun
+                            ->whereMonth('created_at', $month)
+                            ->paginate(10)
+    ]);    
 });//->middleware('auth');
 
 Route::get('/outcome/{user:username}', function (User $user) {
@@ -113,6 +118,10 @@ Route::get('/outcome/{user:username}', function (User $user) {
         'user' => $user,
         'year' => $year,
         'month' => $month,
-        'transactions' => Transaction::filter(request(['category', 'year', 'month']))
+        'transactions' => Transaction::with('category') // Eager loading 'category'
+                            ->where('category_id', '!=', 1) // Menampilkan selain category_id 1
+                            ->whereYear('created_at', $year) // Filter berdasarkan tahun
+                            ->whereMonth('created_at', $month)
+                            ->paginate(10) // Pagination 10 items per page
     ]);
 });//->middleware('auth');
