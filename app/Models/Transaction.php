@@ -12,7 +12,7 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $with = ['category'];
-    protected $fillable = ['title', 'category_id', 'amount', 'description'];
+    protected $fillable = ['title', 'category_id', 'amount', 'description', 'updated_at'];
     // protected $fillable = ['title', 'amount', 'description'];
     // protected $guarded = ['id','user_id', 'created_at', 'updated_at'];
     protected $guarded = ['id', 'created_at', 'updated_at'];

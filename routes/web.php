@@ -54,11 +54,11 @@ Route::get('/income/create', function () {
     return view('create-income',['title'=>'Add Income']);
 });
 Route::post('/income/create', [TransactionController::class, 'store']);
-Route::get('/income/{transaction:id}', function (User $user, Transaction $transaction) {
-    return view('update-income',['title'=>'Update Income']);
+Route::get('/income/update/{transaction:id}', function (Transaction $transaction) {
+    return view('update-income',['transaction' => $transaction]);
 });
-Route::put('/income/{transaction:id}', [TransactionController::class, 'updateTransaction']);
-Route::delete('/income/{transaction:id}', [TransactionController::class, 'deleteTransaction']);
+Route::put('/income/update/{transaction:id}', [TransactionController::class, 'updateTransaction']);
+Route::delete('/income/delete/{transaction:id}', [TransactionController::class, 'deleteTransaction']);
 
 
 //outcome
@@ -66,12 +66,13 @@ Route::get('/outcome/create', function (User $user) {
     return view('create-outcome',['title'=>'Add Outcome']);
 });
 Route::post('/outcome/create', [TransactionController::class, 'store']);
-Route::get('/outcome/{transaction:id}', function (User $user, Transaction $transaction) {
-    return view('update-outcome',['title'=>'Update Outcome']);
+Route::get('/outcome/update/{transaction:id}', function (Transaction $transaction) {// Akan menampilkan 404 jika tidak ditemukan
+    return view('update-outcome', ['transaction' => $transaction]);
 });
-Route::put('/outcome/{transaction:id}', [TransactionController::class, 'updateTransaction']);
-Route::delete('/outcome/{transaction:id}', [TransactionController::class, 'deleteTransaction']);
+Route::put('/outcome/update/{transaction:id}', [TransactionController::class, 'updateTransaction']);
+Route::delete('/outcome/delete/{transaction:id}', [TransactionController::class, 'deleteTransaction']);
 Route::get('/outcome/create', [TransactionController::class, 'createCategory']);
+Route::get('/outcome/update/{transaction:id}', [TransactionController::class, 'updateCategory']);
 
 
 Route::post('/logout', [UserController::class, 'logout']);//->middleware('auth');

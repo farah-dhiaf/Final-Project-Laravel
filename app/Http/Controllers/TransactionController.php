@@ -57,54 +57,60 @@ class TransactionController extends Controller
         $categories = Category::all(); // Ambil semua data dari tabel category
         return view('create-outcome')->with('categories', $categories);
     }
-    public function show($id)
+    public function updateCategory()
     {
-        // Coba temukan transaksi dengan ID
-        $transaction = Transaction::find($id);
-
-        // Jika tidak ditemukan, arahkan kembali dengan pesan error
-        if (!$transaction) {
-            return redirect()->back()->with('error', 'Transaction not found.');
-        }
-
-        // Kembalikan view dengan transaksi
-        return view('transactions.show', compact('transaction'));
+        $categories = Category::all(); // Ambil semua data dari tabel category
+        return view('update-outcome')->with('categories', $categories);
     }
+    // public function show($id)
+    // {
+    //     $transaction = Transaction::find($id);
+
+    //     if (!$transaction) {
+    //         return redirect()->back()->with('error', 'Transaction not found.');
+    //     }
+
+    //     // Kembalikan view dengan transaksi
+    //     return view('transactions.show', compact('transaction'));
+    // }
     public function updateTransaction(Request $request)
     {
-        // Validasi input dari form
-        // Auth::id() = Auth::id();
+
         $request->validate([
-            // 'user_id' => Auth::id(),
-            'id' => 'required|numeric',
             'title' => 'required|string|max:255',
-            'category_id' => 'nullable|numeric',
+            'category_id' => 'required|numeric',
             'amount' => 'required|numeric',
-            'description' => 'required|text',
+            'description' => 'required|string',
         ]);
 
         $transaction = Transaction::find($request->input('id'));
-
         if (!$transaction) {
             return redirect()->back()->with('error', 'Transaction not found.');
         }
 
         DB::table('transactions')
-            ->where('id')
+            ->where('id', $transaction->id)
             ->update([
-                // 'user_id' => Auth::id(),
                 'title' => $request->input('title'),
-                'category_id' => $request->input('category_id'),
+                'category_id' => $request->input('category_id', 1),
                 'amount' => $request->input('amount'),
                 'description' => $request->input('description'),
-                'updated_at' => now() // Pastikan timestamp ter-update
+                'updated_at' => now()
             ]);
+        // dd($result);
+
+
 
         // Redirect kembali dengan pesan sukses
         return redirect("/home/" . Auth::user()->username)->with('success', 'Transaction updated successfully!');
     }
 
-
+    // public function editTransaction($id)
+    // {
+    //     $transaction = Transaction::findOrFail($id); // Pastikan transaksi ditemukan
+    //     return view('update-outcome', compact('transaction')); // Kirim variabel ke view
+    // }
+    
 
     public function deleteTransaction()
     {
@@ -116,12 +122,44 @@ class TransactionController extends Controller
             ->where('id')
             ->delete();
 
-        // Logout setelah menghapus user
-        // Auth::logout();
-
-        // Redirect ke halaman utama dengan pesan sukses
         return redirect("/home/" . Auth::user()->username)->with('success', 'Transaction deleted successfully!');
     }
+
+    // public function updateTransaction(Request $request)
+    // {
+    //     // Validasi input dari form
+    //     $request->validate([
+    //         'id' => 'required|numeric',
+    //         'title' => 'required|string|max:255',
+    //         'category_id' => 'nullable|numeric',
+    //         'amount' => 'required|numeric',
+    //         'description' => 'required|string',
+    //     ]);
+
+    //     // Temukan transaksi berdasarkan ID
+    //     $transaction = Transaction::find($request->input('id'));
+
+    //     if (!$transaction) {
+    //         return redirect()->back()->with('error', 'Transaction not found.');
+    //     }
+
+    //     // Opsi: Periksa apakah transaksi milik pengguna yang sedang login
+    //     if ($transaction->user_id !== Auth::id()) {
+    //         return redirect()->back()->with('error', 'Unauthorized action.');
+    //     }
+
+    //     // Update transaksi
+    //     $transaction->update([
+    //         'title' => $request->input('title'),
+    //         'category_id' => $request->input('category_id'),
+    //         'amount' => $request->input('amount'),
+    //         'description' => $request->input('description'),
+    //     ]);
+
+    //     // Redirect ke halaman home dengan pesan sukses
+    //     return redirect("/home/" . Auth::user()->username)->with('success', 'Transaction updated successfully!');
+    // }
+
 
     public function showChart()
     {
@@ -129,13 +167,13 @@ class TransactionController extends Controller
         $transactions = Transaction::with('category')
             ->where('category_id', '!=', 1)
             ->get();
-        
+
         // Persiapkan data untuk chart
         $data = [
             'labels' => $transactions->pluck('category.name'), // Ambil nama kategori
             'amounts' => $transactions->pluck('amount'), // Jumlah transaksi
         ];
-    
+
         return view('pie-chart', compact('data'));
     }
 }
