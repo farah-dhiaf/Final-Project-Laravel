@@ -10,6 +10,7 @@ use App\Model\Subcategory;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\SummaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,20 +34,24 @@ Route::get('/register', function () {
 });//->middleware('guest');
 Route::post('/register', [UserController::class, 'store']);//->middleware('guest');
 
-Route::get('/home/{user:username}/{year}/{month}', [TransactionController::class, 'show']);//->middleware('auth');
+// Route::get('/home/{user:username}/{year}/{month}', [TransactionController::class, 'show']);//->middleware('auth');
 
 Route::get('/home/{user:username}', function (User $user) {
     $month = request('month', now()->month);
     $year = request('year', now()->year);
     
-    // Filter transactions based on month and year
+    $totalIncome = Transaction::totalIncome($month, $year);
+    $totalOutcome = Transaction::totalOutcome($month, $year);
+
     return view('home', [
         'title' => 'Report in ' . date('F', mktime(0, 0, 0, $month, 10)) . ' ' . $year,
         'user' => $user,
         'year' => $year,
         'month' => $month,
-        'transaction' => Transaction::filter(request(['category', 'year', 'month']))
-    ]);
+        'totalIncome' => $totalIncome,
+        'totalOutcome' => $totalOutcome,
+        'diff' => $totalIncome - $totalOutcome
+    ]); 
 });
 
 
@@ -60,7 +65,6 @@ Route::get('/income/update/{transaction:id}', function (Transaction $transaction
 });
 Route::put('/income/update/{transaction:id}', [TransactionController::class, 'updateTransaction']);
 Route::delete('/income/delete/{transaction:id}', [TransactionController::class, 'deleteTransaction']);
-
 
 //outcome
 Route::get('/outcome/create', function (User $user) {
@@ -94,12 +98,17 @@ Route::get('/income/{user:username}', function (User $user) {
     $month = request('month', now()->month);
     $year = request('year', now()->year);
     
-    // Filter transactions based on month and year
+    $totalIncome = Transaction::totalIncome($month, $year);
+    $totalOutcome = Transaction::totalOutcome($month, $year);
+
     return view('income', [
         'title' => 'Report in ' . date('F', mktime(0, 0, 0, $month, 10)) . ' ' . $year,
         'user' => $user,
         'year' => $year,
         'month' => $month,
+        'totalIncome' => $totalIncome,
+        'totalOutcome' => $totalOutcome,
+        'diff' => $totalIncome - $totalOutcome,
         'transactions' => Transaction::with('category') // Eager loading 'category'
                             ->where('category_id', 1)
                             ->whereYear('created_at', $year) // Filter berdasarkan tahun
@@ -112,12 +121,17 @@ Route::get('/outcome/{user:username}', function (User $user) {
     $month = request('month', now()->month);
     $year = request('year', now()->year);
     
-    // Filter transactions based on month and year
+    $totalIncome = Transaction::totalIncome($month, $year);
+    $totalOutcome = Transaction::totalOutcome($month, $year);
+
     return view('outcome', [
         'title' => 'Report in ' . date('F', mktime(0, 0, 0, $month, 10)) . ' ' . $year,
         'user' => $user,
         'year' => $year,
         'month' => $month,
+        'totalIncome' => $totalIncome,
+        'totalOutcome' => $totalOutcome,
+        'diff' => $totalIncome - $totalOutcome,
         'transactions' => Transaction::with('category') // Eager loading 'category'
                             ->where('category_id', '!=', 1) // Menampilkan selain category_id 1
                             ->whereYear('created_at', $year) // Filter berdasarkan tahun

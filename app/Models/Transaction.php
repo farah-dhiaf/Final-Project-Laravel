@@ -37,26 +37,22 @@ class Transaction extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeFilter(Builder $query, array $filters): void
+    public static function totalIncome($month, $year)
     {
-        $query->when(
-            $filters['user'] ?? false, 
-            fn ($query, $user) =>
-            $query->whereHas('user', fn($query) => $query->where('username', $user))
-        );
+        // Menghitung total income berdasarkan kategori income (category_id = 1)
+        return self::where('category_id', '=', 1) // Filter kategori income
+                   ->whereYear('created_at', $year) // Filter berdasarkan tahun
+                   ->whereMonth('created_at', $month) // Filter berdasarkan bulan
+                   ->sum('amount'); // Menjumlahkan kolom amount
+    }
 
-        $query->when(
-            $filters['month'] ?? false, 
-            fn ($query, $month) =>
-            $query->whereMonth('created_at', $month)
-        );
-        
-        $query->when(
-            $filters['year'] ?? false, 
-            fn ($query, $year) =>
-            $query->whereYear('created_at', $year)
-        );
-
+    public static function totalOutcome($month, $year)
+    {
+        // Menghitung total income berdasarkan kategori income (category_id = 1)
+        return self::where('category_id', '!=', 1) 
+                    ->whereYear('created_at', $year) 
+                    ->whereMonth('created_at', $month)
+                    ->sum('amount');
     }
 }
 

@@ -1,5 +1,8 @@
 <x-layout>
-    <x-slot:title>{{ $title }}</x-slot:title> <!-- Title dinamis berdasarkan bulan -->
+    <x-slot:title>{{ $title }}</x-slot:title>
+    <x-slot:totalIncome>{{ $totalIncome }}</x-slot:totalIncome>
+    <x-slot:totalOutcome>{{ $totalOutcome }}</x-slot:totalOutcome>
+    <x-slot:diff>{{ $diff}}</x-slot:diff>
     <h2 class="text-xl font-bold tracking-tight text-gray-900">Detail Outcome</h2>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
