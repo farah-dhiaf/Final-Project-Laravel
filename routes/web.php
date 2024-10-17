@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\ChartDataController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,3 +141,8 @@ Route::get('/outcome/{user:username}', function (User $user) {
                             ->paginate(10) // Pagination 10 items per page
     ]);
 });//->middleware('auth');
+
+// chart
+Route::get('/chart-data', [ChartDataController::class, 'getChartData']);
+Route::get('/bar-data', [ChartDataController::class, 'getBarData']);
+// Route::get('/home/{user:username}', [CategoryController::class, 'index'])->name('layout');

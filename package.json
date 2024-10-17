@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.5.9",
+        "apexcharts": "^3.54.1",
         "chart.js": "^4.4.5"
     }
 }
