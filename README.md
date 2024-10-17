@@ -3,6 +3,8 @@ Nama Anggota Kelompok:
 1. Wardatul Amalia Safitri (5025211006)
 2. Farah Dhia Fadhila (5025211030)
 
+Video Demo Aplikasi: https://youtu.be/K3NNWbA5tus
+
 ### Deskripsi Project
 Pada final project laravel kali ini, kami akan membuat sebuah website untuk melakukan pencatatan pengeluaran keuangan. Pada website ini terdapat beberapa fitur untuk membantu merekap laporan keuangan per bulan. Beberapa fitur tersebut adalah:
 1. Tambah transaksi baru
