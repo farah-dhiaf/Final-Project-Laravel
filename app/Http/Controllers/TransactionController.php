@@ -112,18 +112,18 @@ class TransactionController extends Controller
     // }
     
 
-    public function deleteTransaction()
+    public function deleteTransaction($id)
     {
-        // Ambil user yang sedang login
-        // $user = Auth::user();
-
-        // Hapus user dari database
-        DB::table('transactions')
-            ->where('id')
-            ->delete();
-
-        return redirect("/home/" . Auth::user()->username)->with('success', 'Transaction deleted successfully!');
+        $transaction = Transaction::find($id);
+    
+        if (!$transaction) {
+            return redirect()->back()->with('error', 'Transaction not found.');
+        }
+    
+        $transaction->delete();
+        return redirect()->back()->with('success', 'Transaction deleted successfully!');
     }
+    
 
     // public function updateTransaction(Request $request)
     // {

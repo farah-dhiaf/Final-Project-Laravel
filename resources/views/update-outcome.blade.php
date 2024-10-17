@@ -24,7 +24,7 @@
                     </a>
                 </div>
                 <!-- Modal body -->
-                <form action="/outcome/update/{$transaction->id}}" method="POST">
+                <form action="/outcome/update/{{$transaction->id}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
